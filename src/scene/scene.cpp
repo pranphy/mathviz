@@ -2,22 +2,22 @@
 
 void Scene::step_right(){
     float step = 0.01f * scale;
-    y += step;
+    x += step;
 }
 
 void Scene::step_left(){
     float step = 0.01f * scale;
-    y -= step;
+    x -= step;
 }
 
 void Scene::step_up(){
     float step = 0.01f * scale;
-    x -= step;
+    y += step;
 }
 
 void Scene::step_down(){
     float step = 0.01f * scale;
-    x += step;
+    y -= step;
 }
 
 void Scene::zoom_in(){

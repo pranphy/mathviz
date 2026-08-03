@@ -15,7 +15,7 @@ struct Scene{
     void zoom_out();
     void iterate_up();
     void iterate_down();
-    virtual void run(GLFWwindow*) = 0;
+    virtual bool run(GLFWwindow*,int) = 0;
     virtual void render() const = 0;
     virtual ~Scene()=0;
 };

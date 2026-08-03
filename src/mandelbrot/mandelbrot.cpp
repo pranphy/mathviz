@@ -4,53 +4,24 @@
 
 #include "mandelbrot/mandelbrot.h"
 
-VertexArray create_rectangle_vao(Buffer& vbo)
-{
-    constexpr std::array<GLfloat, 18> rectangle_data = {
-        -1.f, -1.f, 0.f,
-         1.f, -1.f, 0.f,
-         1.f,  1.f, 0.f,
-         1.f,  1.f, 0.f,
-        -1.f,  1.f, 0.f,
-        -1.f, -1.f, 0.f
-    };
-
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER,
-                 static_cast<GLsizeiptr>(rectangle_data.size() * sizeof(GLfloat)),
-                 rectangle_data.data(),
-                 GL_STATIC_DRAW);
-
-    VertexArray vao;
-    glBindVertexArray(vao);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
-
-    glBindVertexArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    return vao;
-}
-
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
       buffer(h*w*3),
-      rectangle_buffer{}
+      rectangle_buffer{},
+      shader_program{
+        read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.vs"}),
+        read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.fs"})
+      }
 {
-    std::println("I am constructing Mandelbrot scene");
     width = w;
     height = h;
     scale = 1.0f;
     x = 0.0f;
-    y = 0.0f;
+    y = 0.2f;
     max_iterations = 30;
 
-    vertex_shader = read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.vs"});
-    fragment_shader = read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.fs"});
-    rectangle_vao = create_rectangle_vao(rectangle_buffer);
-    Program shader_program(vertex_shader, fragment_shader);
+    create_rectangle_vao(rectangle_buffer, rectangle_vao);
     render_data = RenderData{shader_program, rectangle_vao};
 
 }
@@ -140,20 +111,21 @@ void MandelbrotScene::animate_to(MandelbrotParam m1, int frames,VideoWriter& wr,
 
 }
 
-void MandelbrotScene::run(GLFWwindow* window){
+bool MandelbrotScene::run(GLFWwindow* window,int /* unused */){
     //std::println("I am running scene");
 
-        //VideoWriter wr("./mandelbert-0002.mp4",width,height,30);
-        //std::vector<MandelbrotParam> keyframes {
-        //    { 0.03053458f, 0.08974f, -1.7252895f,30},
-        //    { 0.000772018f, 0.0017459377f, -1.8309544f, 39},
-        //    {2.7735707e-5f, 7.949502e-5f, -1.83285550f,  47},
-        //};
-        //for(auto keyframe : keyframes){
-        //    animate_to(keyframe,300,wr,window);
-        //}
-    render();
+    VideoWriter wr("./mandelbert-0003.mp4",width,height,30);
+    std::vector<MandelbrotParam> keyframes {
+        { -1.7252895f,0.03053458f, 0.08974f, 30},
+        {-1.8309544f, 0.000772018f, 0.0017459377f,  39},
+        {-1.83285550f,2.7735707e-5f, 7.949502e-5f,   47},
+    };
+    for(auto keyframe : keyframes){
+        animate_to(keyframe,300,wr,window);
+    }
+    //render();
     glfwSwapBuffers(window);
+    return false;
 }
 
 MandelbrotScene::~MandelbrotScene(){}

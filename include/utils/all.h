@@ -1,20 +1,13 @@
 #pragma once
 
 #include <filesystem>
-#include <glad/gl.h>
-#include <GLFW/glfw3.h>
 #include <string>
-#include <fstream>
 #include <stdexcept>
 
-[[nodiscard]] static std::string read_file(const std::filesystem::path& file_path)
-{
-    std::ifstream stream{file_path, std::ios::in | std::ios::binary};
-    if (!stream) {
-        throw std::runtime_error(std::format("file reading error: {}", file_path.string()));
-    }
-    return {std::istreambuf_iterator<char>{stream}, std::istreambuf_iterator<char>{}};
-}
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
+
+std::string read_file(const std::filesystem::path& file_path);
 
 struct Buffer {
     GLuint id = 0;
@@ -46,3 +39,5 @@ struct VertexArray {
     operator GLuint() const { return id; }
 };
 
+
+void create_rectangle_vao(Buffer& vbo, VertexArray& vao);

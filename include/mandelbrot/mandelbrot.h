@@ -18,13 +18,13 @@ typedef std::tuple<float, float, float, int> MandelbrotParam;
 struct MandelbrotScene: public Scene
 {
     int width, height;
-    std::string vertex_shader;
-    std::string fragment_shader;
+    //std::string vertex_shader;
+    //std::string fragment_shader;
     std::vector<unsigned char> buffer;
     Buffer rectangle_buffer;
     VertexArray rectangle_vao;
 
-    //Program shader_program;
+    Program shader_program;
     RenderData render_data;
 
     MandelbrotScene(int,int);
@@ -33,7 +33,7 @@ struct MandelbrotScene: public Scene
     virtual void render() const override;
     void move_along_path(MandelbrotScene m1, MandelbrotScene m2, int frames,VideoWriter& wr, GLFWwindow* window);
     void animate_to(MandelbrotParam m1, int frames,VideoWriter& wr, GLFWwindow* window);
-    virtual void run(GLFWwindow* window) override;
+    virtual bool run(GLFWwindow* window, int) override;
     virtual ~MandelbrotScene();
 };
 

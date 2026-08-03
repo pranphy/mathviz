@@ -22,7 +22,7 @@ void handle_input(GLFWwindow* window, std::shared_ptr<Scene> s, bool& running)
 
 App::App(int w, int h):
     window_width(w), window_height(h),
-     window{nullptr}, mode(Mode::GUI)
+     window{nullptr}, mode(Mode::TUI)
 {
 }
 
@@ -66,8 +66,8 @@ void App::mainloop(){
     try {
         bool running = true;
         while (running) {
-            //handle_input(window, mandelbrot, running);
-            scene->run(window);
+            handle_input(window, scene, running);
+            running = scene->run(window,0);
             //running = false;
             //callback();
             //mandelbrot.render();
@@ -80,6 +80,7 @@ void App::mainloop(){
 }
 
 App::~App(){
+    scene.reset();
     glfwDestroyWindow(window);
     glfwTerminate();
 }
