@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include "ogl/app.h"
 
-void handle_key(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void handle_key(GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/) {
     // Only react when a key is pressed or held down (repeat)
     if (action != GLFW_PRESS && action != GLFW_REPEAT) {
         return;

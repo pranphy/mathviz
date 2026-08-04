@@ -1,3 +1,5 @@
+#include <print>
+
 #include "scene/scene.h"
 
 void Scene::set_resolution(int width, int height){

@@ -3,7 +3,6 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include <print>
 #include "ogl/render.h"
 
 struct Scene{

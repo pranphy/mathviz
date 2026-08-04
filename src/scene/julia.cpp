@@ -1,3 +1,5 @@
+#include <print>
+
 #include "scene/julia.h"
 
 static const std::string julia_vs = R"(#version 460 core
