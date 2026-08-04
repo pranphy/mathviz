@@ -1,5 +1,5 @@
 
-#include "mandelbrot/mandelbrot.h"
+#include "scene/mandelbrot.h"
 #include "ogl/app.h"
 
 int main()

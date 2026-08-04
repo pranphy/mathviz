@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 
 
-#include "mandelbrot/mandelbrot.h"
+#include "scene/mandelbrot.h"
 
 
 
