@@ -1,5 +1,6 @@
 
 #include "scene/mandelbrot.h"
+#include "scene/julia.h"
 #include "ogl/app.h"
 
 int main()
@@ -11,7 +12,8 @@ int main()
     App app(width,height);
     if (app.init() != 0) return 1;
     auto mandelbrot = std::make_shared<MandelbrotScene>(width, height);
-    app.add_scene(mandelbrot);
+    auto julia = std::make_shared<JuliaScene>(width, height);
+    app.add_scene(julia);
     app.mainloop();
     return 0;
 }

@@ -24,12 +24,10 @@ struct MandelbrotScene: public Scene
     VertexArray rectangle_vao;
 
     Program shader_program;
-    RenderData render_data;
 
     MandelbrotScene(int,int);
     void set_param(MandelbrotParam p);
 
-    virtual void render() const override;
     void animate_to(MandelbrotParam m1, int frames,VideoWriter& wr, GLFWwindow* window);
     virtual bool run(GLFWwindow* window, int) override;
     bool save_video(GLFWwindow* window, int);

@@ -21,9 +21,13 @@ MandelbrotScene::MandelbrotScene(int w, int h):
     y = 0.2f;
     max_iterations = 30;
 
+    x_min_factor = -2.f;
+    x_max_factor =  1.f;
+    y_min_factor = -1.f;
+    y_max_factor =  1.f;
+
     create_rectangle_vao(rectangle_buffer, rectangle_vao);
     render_data = RenderData{shader_program, rectangle_vao};
-
 }
 void MandelbrotScene::set_resolution(int w, int h){
     width  = w;
@@ -34,35 +38,6 @@ void MandelbrotScene::set_resolution(int w, int h){
 
 void MandelbrotScene::set_param(MandelbrotParam p){
     std::tie(x,y,scale,max_iterations) = p;
-}
-
-void MandelbrotScene::render() const 
-{
-    glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    glUseProgram(render_data.shader_program);
-
-    glUniform1f(0, width);
-    glUniform1f(1, height);
-
-    glUniform2f(2,
-        -2.f * scale + x,
-         1.f * scale + x
-    );
-
-    glUniform2f(3,
-        -1.f * scale + y,
-         1.f * scale + y
-    );
-
-    glUniform1ui(4, max_iterations);
-
-    glBindVertexArray(render_data.vertex_array_object);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
-
-    glUseProgram(0);
 }
 
 

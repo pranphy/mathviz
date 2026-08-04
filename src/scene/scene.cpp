@@ -45,3 +45,35 @@ void Scene::iterate_down(){
 }
 
 Scene::~Scene(){}
+
+void Scene::render() const {
+    glViewport(0, 0, width, height);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(render_data.shader_program);
+
+    glUniform1f(0, static_cast<float>(width));
+    glUniform1f(1, static_cast<float>(height));
+
+    glUniform2f(2,
+        x_min_factor * scale + x,
+        x_max_factor * scale + x
+    );
+
+    glUniform2f(3,
+        y_min_factor * scale + y,
+        y_max_factor * scale + y
+    );
+
+    glUniform1ui(4, max_iterations);
+
+    // Call subclass hook for additional uniforms (if any)
+    setup_uniforms();
+
+    glBindVertexArray(render_data.vertex_array_object);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+
+    glUseProgram(0);
+}
+
