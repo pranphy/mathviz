@@ -1,5 +1,11 @@
 #include "scene/scene.h"
 
+void Scene::set_resolution(int width, int height){
+    this->width = width;
+    this->height = height;
+    std::println("Parent size changed to ({},{})",width,height);
+}
+
 void Scene::step_right(){
     float step = 0.01f * scale;
     x += step;

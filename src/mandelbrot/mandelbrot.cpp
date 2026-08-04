@@ -25,6 +25,12 @@ MandelbrotScene::MandelbrotScene(int w, int h):
     render_data = RenderData{shader_program, rectangle_vao};
 
 }
+void MandelbrotScene::set_resolution(int w, int h){
+    width  = w;
+    height = h;
+    std::println("Mandelbert: The size changed to ({},{})",width,height);
+    buffer.resize(w*h*3);
+}
 
 void MandelbrotScene::set_param(MandelbrotParam p){
     std::tie(x,y,scale,max_iterations) = p;
@@ -32,6 +38,7 @@ void MandelbrotScene::set_param(MandelbrotParam p){
 
 void MandelbrotScene::render() const 
 {
+    glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(render_data.shader_program);
@@ -58,31 +65,6 @@ void MandelbrotScene::render() const
     glUseProgram(0);
 }
 
-
-void MandelbrotScene::move_along_path(MandelbrotScene m1, MandelbrotScene m2, int frames,VideoWriter& wr,GLFWwindow* window) {
-        // Animation parameters
-        const int total_frames = frames;
-        glm::vec2 start_center(m1.x, m1.y);
-        glm::vec2 end_center(m2.x, m2.y);
-        float start_zoom = m1.scale;
-        float end_zoom   = m2.scale;
-
-        glPixelStorei(GL_PACK_ALIGNMENT, 1);
-
-        for (int frame = 0; frame < total_frames; ++frame) {
-            float t = frame / float(total_frames - 1);
-            glm::vec2 center = glm::mix(start_center, end_center, t);
-            scale = std::exp(glm::mix(std::log(start_zoom), std::log(end_zoom), t));
-            x = center.x;
-            y = center.y;
-            render();
-            glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
-            wr.push_frame(buffer.data());
-            //std::cout.write(reinterpret_cast<char*>(buffer.data()), buffer.size());
-            glfwSwapBuffers(window);
-        }
-
-    }
 
 void MandelbrotScene::animate_to(MandelbrotParam m1, int frames,VideoWriter& wr,GLFWwindow* window) {
     // Animation parameters
@@ -111,20 +93,36 @@ void MandelbrotScene::animate_to(MandelbrotParam m1, int frames,VideoWriter& wr,
 
 }
 
-bool MandelbrotScene::run(GLFWwindow* window,int /* unused */){
-    //std::println("I am running scene");
+bool MandelbrotScene::save_video(GLFWwindow* window,int /* unused */){
+    // Detect whether the window is visible (Mode::GUI vs Mode::TUI)
 
-    VideoWriter wr("./mandelbert-0003.mp4",width,height,30);
+    // Initialize VideoWriter with the target render resolution
+    VideoWriter wr("./mandelbrot-0003.mp4", width, height, 40);
+
+    // Resize reading buffer
+    //buffer.resize(render_width * render_height * 3);
+
     std::vector<MandelbrotParam> keyframes {
         { -1.7252895f,0.03053458f, 0.08974f, 30},
         {-1.8309544f, 0.000772018f, 0.0017459377f,  39},
-        {-1.83285550f,2.7735707e-5f, 7.949502e-5f,   47},
+        //{-1.83285550f,2.7735707e-5f, 7.949502e-5f,   47},
     };
     for(auto keyframe : keyframes){
-        animate_to(keyframe,300,wr,window);
+        animate_to(keyframe,50,wr,window);
     }
-    //render();
-    glfwSwapBuffers(window);
+
+    return false;
+}
+
+bool MandelbrotScene::run(GLFWwindow* window,int mode){
+    // Detect whether the window is visible (Mode::GUI vs Mode::TUI)
+    if(mode == 0){ // GUI is 0 and TUI is 1
+        render();
+        return true;
+    } else {
+        return save_video(window,0);
+    }
+
     return false;
 }
 

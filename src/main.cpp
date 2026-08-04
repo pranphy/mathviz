@@ -5,8 +5,8 @@
 int main()
 {
 
-    constexpr int width  = 3840; 
-    constexpr int height = 2160;
+    constexpr int width  = 1920; 
+    constexpr int height = 1080;
     //std::println("I initialized mandelbrot");
     App app(width,height);
     if (app.init() != 0) return 1;

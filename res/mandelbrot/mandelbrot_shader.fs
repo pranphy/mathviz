@@ -1,7 +1,6 @@
 // -*- coding: utf-8 -*-
 // vim: ai ts=4 sts=4 et sw=4 ft=glsl
 // author : Prakash [प्रकाश]
-// date   : 2025-12-23
 
 #version 460
 
@@ -14,38 +13,40 @@ layout(location = 4) uniform uint max_iterations;
 out vec4 pixel_color;
 
 const vec3 color_map[] = {
-    {0.0,  0.0,  0.0},
-    {0.26, 0.18, 0.06},
-    {0.1,  0.03, 0.1},
-    {0.04, 0.0,  0.18},
-    {0.02, 0.02, 0.29},
-    {0.0,  0.03, 0.39},
-    {0.05, 0.17, 0.54},
-    {0.09, 0.32, 0.69},
-    {0.22, 0.49, 0.82},
-    {0.52, 0.71, 0.9},
-    {0.82, 0.92, 0.97},
-    {0.94, 0.91, 0.75},
-    {0.97, 0.79, 0.37},
-    {1.0,  0.67, 0.0},
-    {0.8,  0.5,  0.0},
-    {0.6,  0.34, 0.0},
-    {0.41, 0.2,  0.01}
+    vec3(0.0,  0.0,  0.0),
+    vec3(0.26, 0.18, 0.06),
+    vec3(0.1,  0.03, 0.1),
+    vec3(0.04, 0.0,  0.18),
+    vec3(0.02, 0.02, 0.29),
+    vec3(0.0,  0.03, 0.39),
+    vec3(0.05, 0.17, 0.54),
+    vec3(0.09, 0.32, 0.69),
+    vec3(0.22, 0.49, 0.82),
+    vec3(0.52, 0.71, 0.9),
+    vec3(0.82, 0.92, 0.97),
+    vec3(0.94, 0.91, 0.75),
+    vec3(0.97, 0.79, 0.37),
+    vec3(1.0,  0.67, 0.0),
+    vec3(0.8,  0.5,  0.0),
+    vec3(0.6,  0.34, 0.0),
+    vec3(0.41, 0.2,  0.01)
 };
 
 void main()
 {
-    const vec2 C = vec2(gl_FragCoord.x * (area_w.y - area_w.x) / rect_width  + area_w.x,
-                        gl_FragCoord.y * (area_h.y - area_h.x) / rect_height + area_h.x);
+    vec2 C = vec2(gl_FragCoord.x * (area_w.y - area_w.x) / rect_width  + area_w.x,
+                  gl_FragCoord.y * (area_h.y - area_h.x) / rect_height + area_h.x);
     vec2 Z = vec2(0.0);
     uint iteration = 0;
+    float z_sq_dist = 0.0;
 
     while (iteration < max_iterations)
     {
-        const float x = Z.x * Z.x - Z.y * Z.y + C.x;
-        const float y = 2.0 * Z.x * Z.y       + C.y;
+        float x = Z.x * Z.x - Z.y * Z.y + C.x;
+        float y = 2.0 * Z.x * Z.y        + C.y;
 
-        if (x * x + y * y > 4.0)
+        z_sq_dist = x * x + y * y;
+        if (z_sq_dist > 4.0)
             break;
 
         Z.x = x;
@@ -54,6 +55,27 @@ void main()
         ++iteration;
     }
 
-    const uint row_index = (iteration * 100 / max_iterations % 17);
-    pixel_color = vec4((iteration == max_iterations ? vec3(0.0) : color_map[row_index]), 1.0);
-}
+    if (iteration == max_iterations)
+    {
+        pixel_color = vec4(0.0, 0.0, 0.0, 1.0);
+    }
+    else
+    {
+        // Continuous potential (smooth coloring) formula to remove banding
+        float log_zn = log(z_sq_dist) / 2.0;
+        float nu = log(log_zn / 0.693147) / 0.693147; // log(2.0) approx 0.693147
+        float smooth_iter = float(iteration) + 1.0 - nu;
+
+        // Map the smooth iteration count to our color map range (17 colors)
+        float color_pos = mod(smooth_iter * 0.2, float(color_map.length()));
+        
+        int idx1 = int(floor(color_pos));
+        int idx2 = (idx1 + 1) % color_map.length();
+        float fract_part = fract(color_pos);
+
+        // Interpolate smoothly between the two palette colors
+        vec3 final_color = mix(color_map[idx1], color_map[idx2], fract_part);
+        pixel_color = vec4(final_color, 1.0);
+    }
+}// date   : 2025-12-23
+

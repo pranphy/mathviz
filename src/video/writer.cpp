@@ -24,7 +24,7 @@ VideoWriter::VideoWriter(const std::string& filename, int w, int h, int fps_)
     codec_ctx->pix_fmt = AV_PIX_FMT_YUV420P;
     codec_ctx->gop_size = 12;
     codec_ctx->max_b_frames = 2;
-    codec_ctx->bit_rate = 4000000;
+    codec_ctx->bit_rate = 20000000;
 
     stream->time_base = codec_ctx->time_base;
 
@@ -68,8 +68,8 @@ VideoWriter::~VideoWriter() {
 }
 
 void VideoWriter::push_frame(const uint8_t* rgb_data) {
-    const uint8_t* src_slice[1] = { rgb_data };
-    int src_stride[1] = { 3 * width };
+    const uint8_t* src_slice[1] = { rgb_data + (height - 1) * 3 * width };
+    int src_stride[1] = { -3 * width };
 
     sws_scale(sws_ctx, src_slice, src_stride, 0, height,
               frame->data, frame->linesize);
