@@ -1,11 +1,25 @@
 #include <print>
+#include <format>
 
 #include "scene/scene.h"
+#include "writer/ppm.h"
+
+Scene::Scene(int w, int h):
+    buffer(h*w*3),
+    name{"generic_scene"}
+{}
 
 void Scene::set_resolution(int width, int height){
     this->width = width;
     this->height = height;
-    std::println("Parent size changed to ({},{})",width,height);
+    buffer.resize(width*height*3);
+    std::println("Scene={} size changed to ({},{})",name,width,height);
+}
+
+void Scene::save_scene(){
+    std::println("The current size is {},{}",width,height);
+    glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
+    write_ppm(std::format("{}_current_scene.ppm",name), width, height, buffer);
 }
 
 void Scene::step_right(){

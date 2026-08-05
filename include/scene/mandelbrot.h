@@ -9,7 +9,7 @@
 
 #include "utils/all.h"
 #include "scene/scene.h"
-#include "video/writer.h"
+#include "writer/video.h"
 #include "ogl/render.h"
 #include "ogl/program.h"
 
@@ -19,7 +19,7 @@ struct MandelbrotScene: public Scene
 {
     //std::string vertex_shader;
     //std::string fragment_shader;
-    std::vector<unsigned char> buffer;
+    //std::vector<unsigned char> buffer;
     Buffer rectangle_buffer;
     VertexArray rectangle_vao;
 

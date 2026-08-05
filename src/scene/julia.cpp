@@ -89,7 +89,7 @@ void main()
 )";
 
 JuliaScene::JuliaScene(int w, int h) :
-    buffer(h * w * 3),
+    Scene(w,h),
     rectangle_buffer{},
     rectangle_vao{},
     shader_program{julia_vs, julia_fs},
@@ -104,6 +104,7 @@ JuliaScene::JuliaScene(int w, int h) :
     y = 0.0f;
     max_iterations = 100; // More iterations look better for Julia sets
     pasued = false;
+    name = "julia_scene";
 
     x_min_factor = -1.5f;
     x_max_factor =  1.5f;
@@ -112,12 +113,6 @@ JuliaScene::JuliaScene(int w, int h) :
 
     create_rectangle_vao(rectangle_buffer, rectangle_vao);
     render_data = RenderData{shader_program, rectangle_vao};
-}
-
-void JuliaScene::set_resolution(int w, int h) {
-    width = w;
-    height = h;
-    buffer.resize(w * h * 3);
 }
 
 void JuliaScene::setup_uniforms() const {

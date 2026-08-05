@@ -1,4 +1,4 @@
-#include "video/writer.h"
+#include "writer/video.h"
 
 #include <stdexcept>
 

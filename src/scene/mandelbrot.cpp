@@ -7,7 +7,7 @@
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
-      buffer(h*w*3),
+      Scene(w,h),
       rectangle_buffer{},
       shader_program{
         read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.vs"}),
@@ -20,6 +20,7 @@ MandelbrotScene::MandelbrotScene(int w, int h):
     x = 0.0f;
     y = 0.2f;
     max_iterations = 30;
+    name = "mandelbrot_scene";
 
     x_min_factor = -2.f;
     x_max_factor =  1.f;

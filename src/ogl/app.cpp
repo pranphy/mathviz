@@ -19,6 +19,7 @@ void handle_key(GLFWwindow* window, int key, int /*scancode*/, int action, int /
         case GLFW_KEY_D:      (*s)->zoom_in(); break;
         case GLFW_KEY_F:      (*s)->iterate_up(); break;
         case GLFW_KEY_G:      (*s)->iterate_down(); break;
+        case GLFW_KEY_P:      (*s)->save_scene(); break;
         case GLFW_KEY_ESCAPE: glfwSetWindowShouldClose(window, GLFW_TRUE); break;
     }
 }

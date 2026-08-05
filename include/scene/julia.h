@@ -11,7 +11,6 @@
 
 struct JuliaScene : public Scene
 {
-    std::vector<unsigned char> buffer;
     Buffer rectangle_buffer;
     VertexArray rectangle_vao;
 
@@ -25,6 +24,6 @@ struct JuliaScene : public Scene
     JuliaScene(int w, int h);
     virtual void setup_uniforms() const override;
     virtual bool run(GLFWwindow* window, int mode) override;
-    virtual void set_resolution(int width, int height) override;
+    //virtual void set_resolution(int width, int height) override;
     virtual ~JuliaScene();
 };
