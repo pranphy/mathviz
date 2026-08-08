@@ -1,18 +1,12 @@
-#include <filesystem>
 #include <glm/glm.hpp>
 
-
 #include "scene/mandelbrot.h"
-
+#include "mandelbrot_vert.h"
+#include "mandelbrot_frag.h"
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
-      Scene(w,h),
-      rectangle_buffer{},
-      shader_program{
-        read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.vs"}),
-        read_file(std::filesystem::path{"res/mandelbrot/mandelbrot_shader.fs"})
-      }
+      Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
 {
     width = w;
     height = h;
@@ -26,9 +20,6 @@ MandelbrotScene::MandelbrotScene(int w, int h):
     x_max_factor =  1.f;
     y_min_factor = -1.f;
     y_max_factor =  1.f;
-
-    create_rectangle_vao(rectangle_buffer, rectangle_vao);
-    render_data = RenderData{shader_program, rectangle_vao};
 }
 void MandelbrotScene::set_resolution(int w, int h){
     width  = w;
@@ -51,7 +42,6 @@ void MandelbrotScene::animate_to(MandelbrotParam m1, int frames,VideoWriter& wr,
     float start_zoom = scale;
     float end_zoom   = scalen;
 
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
     for (int frame = 0; frame < total_frames; ++frame) {
         float t = frame / float(total_frames - 1);
@@ -73,18 +63,18 @@ bool MandelbrotScene::save_video(GLFWwindow* window,int /* unused */){
     // Detect whether the window is visible (Mode::GUI vs Mode::TUI)
 
     // Initialize VideoWriter with the target render resolution
-    VideoWriter wr("./mandelbrot-0003.mp4", width, height, 40);
+    VideoWriter wr("./mandelbrot-0004.mp4", width, height, 30);
 
     // Resize reading buffer
     //buffer.resize(render_width * render_height * 3);
 
     std::vector<MandelbrotParam> keyframes {
-        { -1.7252895f,0.03053458f, 0.08974f, 30},
+        {-1.7252895f, 0.03053458f, 0.08974f, 30},
         {-1.8309544f, 0.000772018f, 0.0017459377f,  39},
-        //{-1.83285550f,2.7735707e-5f, 7.949502e-5f,   47},
+        {-1.83285550f,2.7735707e-5f, 7.949502e-5f,   47},
     };
     for(auto keyframe : keyframes){
-        animate_to(keyframe,50,wr,window);
+        animate_to(keyframe,100,wr,window);
     }
 
     return false;

@@ -11,11 +11,6 @@
 
 struct JuliaScene : public Scene
 {
-    Buffer rectangle_buffer;
-    VertexArray rectangle_vao;
-
-    Program shader_program;
-
     // Julia constant parameters: C = c_real + i * c_imag
     float c_real;
     float c_imag;

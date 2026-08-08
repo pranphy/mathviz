@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
 #include <tuple>
-#include <print>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
@@ -11,17 +9,17 @@
 #include "scene/scene.h"
 #include "writer/video.h"
 
-typedef std::tuple<float, float, float, int> MandelbrotParam;
+typedef std::tuple<float, float, float, int> GenericParam;
 
-struct MandelbrotScene: public Scene
+struct GenericScene: public Scene
 {
-    MandelbrotScene(int,int);
-    void set_param(MandelbrotParam p);
+    GenericScene(int,int);
+    void set_param(GenericParam p);
 
-    void animate_to(MandelbrotParam m1, int frames,VideoWriter& wr, GLFWwindow* window);
+    virtual void setup_uniforms() const override;
     virtual bool run(GLFWwindow* window, int) override;
     bool save_video(GLFWwindow* window, int);
     virtual void set_resolution(int width, int height) override;
-    virtual ~MandelbrotScene();
+    virtual ~GenericScene();
 };
 

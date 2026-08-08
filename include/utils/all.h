@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 
 std::string read_file(const std::filesystem::path& file_path);
+std::string read_shader_file(const std::filesystem::path& file_path);
 
 struct Buffer {
     GLuint id = 0;

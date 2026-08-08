@@ -4,10 +4,16 @@
 #include "scene/scene.h"
 #include "writer/ppm.h"
 
-Scene::Scene(int w, int h):
-    buffer(h*w*3),
-    name{"generic_scene"}
-{}
+Scene::Scene(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv):
+    width(w),
+    height(h),
+    buffer(h * w * 3),
+    name{"generic_scene"},
+    shader_program{vs_spirv, fs_spirv}
+{
+    create_rectangle_vao(rectangle_buffer, rectangle_vao);
+}
+
 
 void Scene::set_resolution(int width, int height){
     this->width = width;
@@ -66,7 +72,7 @@ void Scene::render() const {
     glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(render_data.shader_program);
+    glUseProgram(shader_program);
 
     glUniform1f(0, static_cast<float>(width));
     glUniform1f(1, static_cast<float>(height));
@@ -86,7 +92,7 @@ void Scene::render() const {
     // Call subclass hook for additional uniforms (if any)
     setup_uniforms();
 
-    glBindVertexArray(render_data.vertex_array_object);
+    glBindVertexArray(rectangle_vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 

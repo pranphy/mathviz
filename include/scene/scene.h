@@ -6,7 +6,10 @@
 #include <vector>
 #include <string>
 
-#include "ogl/render.h"
+#include "ogl/program.h"
+#include "utils/all.h"
+
+#include <span>
 
 struct Scene{
     float scale,x,y;
@@ -15,9 +18,12 @@ struct Scene{
     std::vector<unsigned char> buffer;
     bool pasued = false;
     std::string name;
+    Buffer rectangle_buffer;
+    VertexArray rectangle_vao;
+
+    Program shader_program;
 
     // Common OpenGL rendering data
-    RenderData render_data;
 
     // View bounds configuration (factors multiplied by scale)
     float x_min_factor = -2.0f;
@@ -25,7 +31,7 @@ struct Scene{
     float y_min_factor = -1.0f;
     float y_max_factor =  1.0f;
 
-    Scene(int w, int h);
+    Scene(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv);
 
     void step_right();
     void step_left();

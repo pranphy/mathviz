@@ -17,6 +17,36 @@ std::string read_file(const std::filesystem::path& file_path)
     return {std::istreambuf_iterator<char>{stream}, std::istreambuf_iterator<char>{}};
 }
 
+std::string read_shader_file(const std::filesystem::path& file_path)
+{
+    std::ifstream stream{file_path};
+    if (!stream) {
+        throw std::runtime_error(std::format("shader file reading error: {}", file_path.string()));
+    }
+
+    std::string content;
+    std::string line;
+    std::filesystem::path base_dir = file_path.parent_path();
+
+    while (std::getline(stream, line)) {
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+        if (line.starts_with("#include")) {
+            size_t first_quote = line.find_first_of("\"<");
+            size_t last_quote = line.find_last_of("\">");
+            if (first_quote != std::string::npos && last_quote != std::string::npos && last_quote > first_quote) {
+                std::string include_name = line.substr(first_quote + 1, last_quote - first_quote - 1);
+                std::filesystem::path include_path = base_dir / include_name;
+                content += read_shader_file(include_path) + "\n";
+                continue;
+            }
+        }
+        content += line + "\n";
+    }
+    return content;
+}
+
 
 void create_rectangle_vao(Buffer& vbo, VertexArray& vao)
 {

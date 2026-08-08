@@ -37,7 +37,7 @@ void handle_resize(GLFWwindow* window, int width, int height){
 
 App::App(int w, int h):
     window_width(w), window_height(h),
-    window{nullptr}, mode(Mode::GUI),
+    window{nullptr}, mode(Mode::TUI),
     fbo(0), rbo(0)
 {
 }
@@ -76,6 +76,7 @@ int App::init() {
         glBindRenderbuffer(GL_RENDERBUFFER, rbo);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_RGB8, window_width, window_height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, rbo);
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             throw std::runtime_error("Offscreen framebuffer is not complete");
         }

@@ -1,23 +1,13 @@
 // -*- coding: utf-8 -*-
 // vim: ai ts=4 sts=4 et sw=4 ft=glsl
-// author : Prakash [प्रकाश]
-// date   : 2025-12-23
 
-#version 330 core
+#version 460 core
 
 layout(location = 0) uniform float rect_width;
 layout(location = 1) uniform float rect_height;
-layout(location = 2) uniform vec2 area_w;
-layout(location = 3) uniform vec2 area_h;
-layout(location = 4) uniform uint max_iterations;
+layout(location = 6) uniform float u_time; // Time uniform in seconds passed from CPU
 
-
-out vec4 fragColor;
-
-in vec2 fragCoord;          // from vertex shader
-
-uniform vec2  u_resolution; // window size
-uniform float u_time;       // time in seconds
+layout(location = 0) out vec4 pixel_color;
 
 vec3 palette(float t) {
     vec3 a = vec3(0.5, 0.5, 0.5);
@@ -30,7 +20,10 @@ vec3 palette(float t) {
 
 void main()
 {
-    vec2 uv = (fragCoord * 2.0 - u_resolution.xy) / u_resolution.y;
+
+
+    // Normalize coordinates to [-1, 1] relative to the viewport center, preserving aspect ratio
+    vec2 uv = (gl_FragCoord.xy * 2.0 - vec2(rect_width, rect_height)) / min(rect_width, rect_height);
     vec2 uv0 = uv;
     vec3 finalColor = vec3(0.0);
 
@@ -49,6 +42,6 @@ void main()
         finalColor += col * d;
     }
 
-    fragColor = vec4(finalColor, 1.0);
-}
+    pixel_color = vec4(finalColor, 1.0);
 
+}

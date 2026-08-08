@@ -4,20 +4,20 @@
 #include <GLFW/glfw3.h>
 
 #include <stdexcept>
-#include <string>
+#include <span>
 
 #include "ogl/shader.h"
 
 struct Program {
   GLuint id = 0;
 
-  Program(const std::string &vertex_src, const std::string &fragment_src) {
+  Program(std::span<const uint32_t> vertex_spirv, std::span<const uint32_t> fragment_spirv) {
     id = glCreateProgram();
     if (id == 0)
       throw std::runtime_error{"Failed to create shader program"};
 
-    Shader vertex_shader{GL_VERTEX_SHADER, vertex_src};
-    Shader fragment_shader{GL_FRAGMENT_SHADER, fragment_src};
+    Shader vertex_shader{GL_VERTEX_SHADER, vertex_spirv};
+    Shader fragment_shader{GL_FRAGMENT_SHADER, fragment_spirv};
 
     glAttachShader(id, vertex_shader);
     glAttachShader(id, fragment_shader);
