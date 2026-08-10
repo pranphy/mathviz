@@ -17,7 +17,7 @@ struct JuliaScene : public Scene
     bool last_space_pressed;
 
     JuliaScene(int w, int h);
-    virtual void setup_uniforms() const override;
+    virtual void setup_uniforms() override;
     virtual bool run(GLFWwindow* window, int mode) override;
     //virtual void set_resolution(int width, int height) override;
     virtual ~JuliaScene();

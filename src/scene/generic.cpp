@@ -16,6 +16,7 @@ GenericScene::GenericScene(int w, int h):
     x = 0.0f;
     y = 0.2f;
     max_iterations = 30;
+    is_animated = true;
     name = "generic_scene";
 
     x_min_factor = -2.f;
@@ -30,7 +31,7 @@ void GenericScene::set_resolution(int w, int h){
     buffer.resize(w*h*3);
 }
 
-void GenericScene::setup_uniforms() const {
+void GenericScene::setup_uniforms() {
     glUniform1f(6, static_cast<float>(glfwGetTime()));
 }
 

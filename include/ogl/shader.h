@@ -1,4 +1,5 @@
 #pragma once
+
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
@@ -36,7 +37,6 @@ struct Shader {
             glDeleteShader(id);
     }
 
-    // Allow implicit conversion to GLuint
     operator GLuint() const { return id; }
 };
 

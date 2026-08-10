@@ -25,7 +25,7 @@ JuliaScene::JuliaScene(int w, int h) :
     y_max_factor =  1.5f;
 }
 
-void JuliaScene::setup_uniforms() const {
+void JuliaScene::setup_uniforms() {
     glUniform2f(5, c_real, c_imag);
 }
 

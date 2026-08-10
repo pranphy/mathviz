@@ -3,3 +3,5 @@ build/
 bin/
 *.mp4
 .github/
+_nb/
+.ipynb_checkpoints/

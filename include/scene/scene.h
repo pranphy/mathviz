@@ -17,6 +17,7 @@ struct Scene{
     int width, height;
     std::vector<unsigned char> buffer;
     bool pasued = false;
+    bool is_animated = false;
     std::string name;
     Buffer rectangle_buffer;
     VertexArray rectangle_vao;
@@ -42,14 +43,17 @@ struct Scene{
     void iterate_up();
     void iterate_down();
     void save_scene();
+    virtual void mouse_drag(float dx,float dy);
     virtual void set_resolution(int width, int height);
     virtual bool run(GLFWwindow*,int) = 0;
 
-    // Non-virtual rendering logic
-    void render() const;
+    // Rendering logic
+    void render();
 
-    // Subclass hook for binding custom uniforms
-    virtual void setup_uniforms() const {}
+    // Subclass hooks for custom states and custom uniforms
+    virtual void pre_draw();
+    virtual void post_draw();
+    virtual void setup_uniforms() {}
 
     virtual ~Scene()=0;
 };

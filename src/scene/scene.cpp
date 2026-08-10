@@ -66,11 +66,24 @@ void Scene::iterate_down(){
     if (max_iterations > 0) max_iterations--;
 }
 
+void Scene::mouse_drag(float dx, float dy){
+    x -= static_cast<float>((dx / width)  * scale * 2.0);
+    y += static_cast<float>((dy / height) * scale * 2.0);
+}
+
 Scene::~Scene(){}
 
-void Scene::render() const {
+void Scene::pre_draw(){
+    glBindVertexArray(rectangle_vao);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glBindVertexArray(0);
+}
+
+void Scene::post_draw() {}
+
+void Scene::render() {
     glViewport(0, 0, width, height);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shader_program);
 
@@ -88,13 +101,17 @@ void Scene::render() const {
     );
 
     glUniform1ui(4, max_iterations);
+    glUniform1f(6, static_cast<float>(glfwGetTime()));
 
     // Call subclass hook for additional uniforms (if any)
     setup_uniforms();
 
-    glBindVertexArray(rectangle_vao);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
+    // Call custom subclass states hook
+    pre_draw();
+
+
+    // Call custom subclass cleanup hook
+    post_draw();
 
     glUseProgram(0);
 }

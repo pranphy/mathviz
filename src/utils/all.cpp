@@ -17,6 +17,7 @@ std::string read_file(const std::filesystem::path& file_path)
     return {std::istreambuf_iterator<char>{stream}, std::istreambuf_iterator<char>{}};
 }
 
+/* deprecated */
 std::string read_shader_file(const std::filesystem::path& file_path)
 {
     std::ifstream stream{file_path};
@@ -68,6 +69,23 @@ void create_rectangle_vao(Buffer& vbo, VertexArray& vao)
     glBindVertexArray(vao);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void create_points_vao(Buffer& vbo, VertexArray& vao, const std::vector<glm::vec4>& data)
+{
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER,
+                 static_cast<GLsizeiptr>(data.size() * sizeof(glm::vec4)),
+                 data.data(),
+                 GL_DYNAMIC_DRAW);
+
+    glBindVertexArray(vao);
+
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(glm::vec4), nullptr);
     glEnableVertexAttribArray(0);
 
     glBindVertexArray(0);

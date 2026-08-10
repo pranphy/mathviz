@@ -25,7 +25,11 @@ shader_files = [
   'res/shaders/julia.vert',
   'res/shaders/julia.frag',
   'res/shaders/generic.frag',
-  'res/shaders/standing_wave.frag'
+  'res/shaders/standing_wave.frag',
+  'res/shaders/geometry.vert',
+  'res/shaders/geometry.frag',
+  'res/shaders/atom.vert',
+  'res/shaders/atom.frag'
 ]
 
 # Central list of all shared helper/include files. 
@@ -57,6 +61,7 @@ endforeach
 executable('mandelbrot',
   'src/main.cpp',
   'src/utils/all.cpp',
+  'src/utils/math.cpp',
   'src/writer/video.cpp',
   'src/writer/ppm.cpp',
   'src/ogl/app.cpp',
@@ -64,6 +69,8 @@ executable('mandelbrot',
   'src/scene/mandelbrot.cpp',
   'src/scene/julia.cpp',
   'src/scene/generic.cpp',
+  'src/scene/geometry.cpp',
+  'src/scene/atom.cpp',
   shader_headers,
   include_directories : [include_directories('include', 'glad/include')],
   link_with : glad_lib,
