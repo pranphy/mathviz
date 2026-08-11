@@ -3,10 +3,12 @@
 #include "scene/mandelbrot.h"
 #include "mandelbrot_vert.h"
 #include "mandelbrot_frag.h"
+#include "newton_frac_frag.h"
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
-      Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
+      Scene(w, h, mandelbrot_vert_spirv, newton_frac_frag_spirv)
+      //Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
 {
     width = w;
     height = h;

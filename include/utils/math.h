@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <print>
 #include <random>
@@ -15,12 +15,11 @@ public:
     template <typename Func>
     BinnedInverseSampler(Func f, float x_min, float x_max, int num_bins = 1000)
         : x_min_(x_min), x_max_(x_max), num_bins_(num_bins) {
-        
+
         dx_ = (x_max - x_min) / num_bins_;
         std::vector<float> pdf(num_bins_);
         cdf_.resize(num_bins_ + 1);
 
-        // 1. Evaluate f(x) at each bin center
         float sum = 0.0;
         for (int i = 0; i < num_bins_; ++i) {
             float x = x_min_ + (i + 0.5) * dx_;
@@ -28,7 +27,6 @@ public:
             sum += pdf[i];
         }
 
-        // 2. Build normalized CDF
         cdf_[0] = 0.0;
         for (int i = 0; i < num_bins_; ++i) {
             cdf_[i + 1] = cdf_[i] + (pdf[i] / sum);

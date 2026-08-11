@@ -48,17 +48,6 @@ AtomScene::AtomScene(int w, int h)
         //std::println("{}, {}, {}", pos.x, pos.y, pos.z);
     }
 
-    // Test points
-    //particles[num_electrons+2+0] = glm::vec4(-1.0f, -1.0f, -1.0f, -3.0f); // check1
-    //particles[num_electrons+2+1] = glm::vec4(-1.0f, -1.0f, 1.0f, -3.0f); // check1
-    //particles[num_electrons+2+2] = glm::vec4(-1.0f, 1.0f, -1.0f, -3.0f); // check1
-    //particles[num_electrons+2+3] = glm::vec4(-1.0f, 1.0f, 1.0f, -3.0f); // check1
-    //particles[num_electrons+2+4] = glm::vec4(1.0f, -1.0f, -1.0f, -3.0f); // check1
-    //particles[num_electrons+2+5] = glm::vec4(1.0f, -1.0f, 1.0f, -3.0f); // check1
-    //particles[num_electrons+2+6] = glm::vec4(1.0f, 1.0f, -1.0f, -3.0f); // check1
-    //particles[num_electrons+2+7] = glm::vec4(1.0f, 1.0f, 1.0f, -3.0f); // check1
-    //std::println(" --- ");
-
     // Call standard library helper to create vbo and configure vao attributes
     create_points_vao(particles_vbo, particles_vao, particles);
 
@@ -145,8 +134,6 @@ void AtomScene::sample_electrons() {
         float color_attr = std::min(r * 0.5f,1.0f);
         particles[2 + i] = glm::vec4(pos, color_attr);
 
-        std::println("{}, {}, {}", pos.x, pos.y, pos.z);
-        //std::println("{}, {}, {}", r, theta, phi);
     }
     update_particles(2, num_electrons);
 }

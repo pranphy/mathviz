@@ -8,7 +8,7 @@
 #include "ogl/tui.h"
 
 int gui(){
-    constexpr int width  = 3840; 
+    constexpr int width  = 3840;
     constexpr int height = 2160;
     App app(width,height);
     if (app.init() != 0) return 1;
@@ -17,7 +17,7 @@ int gui(){
     auto generic = std::make_shared<GenericScene>(width, height);
     auto geometry = std::make_shared<GeometryScene>(width, height);
     auto atom = std::make_shared<AtomScene>(width, height);
-    app.add_scene(atom);
+    app.add_scene(mandelbrot);
     app.mainloop();
     return 0;
 }

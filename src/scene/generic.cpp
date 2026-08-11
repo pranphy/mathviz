@@ -41,8 +41,6 @@ void GenericScene::set_param(GenericParam p){
 
 
 bool GenericScene::save_video(GLFWwindow* window,int /* unused */){
-    // Detect whether the window is visible (Mode::GUI vs Mode::TUI)
-
     // Initialize VideoWriter with the target render resolution
     int fps = 30;
     VideoWriter wr("./generic-0004.mp4", width, height, fps);

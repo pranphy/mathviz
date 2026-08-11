@@ -64,6 +64,8 @@ void handle_key(GLFWwindow* window, int key, int /*scancode*/, int action, int /
         case GLFW_KEY_F:      (*s)->iterate_up(); break;
         case GLFW_KEY_G:      (*s)->iterate_down(); break;
         case GLFW_KEY_P:      (*s)->save_scene(); break;
+        case GLFW_KEY_W:      (*s)->increment_param(); break;
+        case GLFW_KEY_E:      (*s)->decrement_param(); break;
         case GLFW_KEY_ESCAPE: glfwSetWindowShouldClose(window, GLFW_TRUE); break;
     }
 }
@@ -73,7 +75,7 @@ void handle_resize(GLFWwindow* window, int width, int height){
 
     auto s = static_cast<std::shared_ptr<Scene>*>(glfwGetWindowUserPointer(window));
     if (s && *s) {
-        
+
         (*s)->set_resolution(width, height);
     }
 }

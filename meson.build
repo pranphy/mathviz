@@ -1,5 +1,5 @@
-project('MandelbrotGL', ['c', 'cpp'],
-  version : '0.1.0',
+project('MathViz', ['c', 'cpp'],
+  version : '0.2.0',
   default_options : ['cpp_std=c++23', 'warning_level=3']
 )
 
@@ -22,6 +22,7 @@ glslang = find_program('glslangValidator', required: true)
 shader_files = [
   'res/shaders/mandelbrot.vert',
   'res/shaders/mandelbrot.frag',
+  'res/shaders/newton_frac.frag',
   'res/shaders/julia.vert',
   'res/shaders/julia.frag',
   'res/shaders/generic.frag',
@@ -32,7 +33,7 @@ shader_files = [
   'res/shaders/atom.frag'
 ]
 
-# Central list of all shared helper/include files. 
+# Central list of all shared helper/include files.
 # Append any new custom #include files here:
 common_glsl_includes = files(
   'res/shaders/colormap.glsl',
@@ -45,7 +46,7 @@ foreach f : shader_files
   parts = f.split('/')
   filename = parts[parts.length() - 1]
   file_parts = filename.split('.')
-  
+
   base = file_parts[0] + '_' + file_parts[1]
   var_name = base + '_spirv'
 
@@ -58,7 +59,7 @@ foreach f : shader_files
   shader_headers += target
 endforeach
 
-executable('mandelbrot',
+executable('mathviz',
   'src/main.cpp',
   'src/utils/all.cpp',
   'src/utils/math.cpp',

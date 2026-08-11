@@ -9,6 +9,7 @@ Scene::Scene(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const u
     height(h),
     buffer(h * w * 3),
     name{"generic_scene"},
+    param{3},
     shader_program{vs_spirv, fs_spirv}
 {
     create_rectangle_vao(rectangle_buffer, rectangle_vao);
@@ -66,6 +67,14 @@ void Scene::iterate_down(){
     if (max_iterations > 0) max_iterations--;
 }
 
+void Scene::increment_param(){
+    param += 1;
+}
+
+void Scene::decrement_param(){
+    param -= 1;
+}
+
 void Scene::mouse_drag(float dx, float dy){
     x -= static_cast<float>((dx / width)  * scale * 2.0);
     y += static_cast<float>((dy / height) * scale * 2.0);
@@ -102,6 +111,7 @@ void Scene::render() {
 
     glUniform1ui(4, max_iterations);
     glUniform1f(6, static_cast<float>(glfwGetTime()));
+    glUniform1ui(8,param);
 
     // Call subclass hook for additional uniforms (if any)
     setup_uniforms();
