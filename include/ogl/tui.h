@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <print>
-#include <ranges>
 #include <vector>
 
 #include "utils/math.h"
@@ -41,8 +40,8 @@ float Rnla(unsigned n, unsigned l, float r, float a) {
 }
 
 void print_yl(){
-    unsigned n = 3; unsigned l = 2; unsigned m = 0; //float a = 5.29e-11; 
-    float a = 1.0;
+    //unsigned n = 3; unsigned l = 2; unsigned m = 0; //float a = 5.29e-11;
+    //float a = 1.0;
     auto ts = linspace(0, std::numbers::pi,100);
     std::vector<float> ylm(ts.size());
     std::vector<float> ylm2(ts.size());
@@ -59,7 +58,7 @@ void print_yl(){
 
 
 void print_rnl(){
-    unsigned n = 3; unsigned l = 2; //float a = 5.29e-11; 
+    //unsigned n = 3; unsigned l = 2; //float a = 5.29e-11;
     float a = 1.0;
     auto rs = linspace(0, 18*a,100);
     std::vector<float> rnl(rs.size());

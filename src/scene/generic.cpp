@@ -21,8 +21,6 @@ GenericScene::GenericScene(int w, int h):
 
     x_min_factor = -2.f;
     x_max_factor =  1.f;
-    y_min_factor = -1.f;
-    y_max_factor =  1.f;
 }
 void GenericScene::set_resolution(int w, int h){
     width  = w;

@@ -42,4 +42,5 @@ void main()
     }
 
     pixel_color = vec4(get_smooth_color(iteration, z_sq_dist, max_iterations), 1.0);
+    //pixel_color = vec4(cosine_palette(iteration / float(max_iterations)),1.0f);
 }

@@ -26,7 +26,7 @@ vec3 get_smooth_color(uint iteration, float z_sq_dist, uint max_iterations) {
     if (iteration == max_iterations) {
         return vec3(0.0);
     }
-    
+
     // Smooth coloring using hardware-accelerated log2
     float log_zn = log2(z_sq_dist) * 0.5;
     float nu = log2(log_zn);
@@ -34,10 +34,18 @@ vec3 get_smooth_color(uint iteration, float z_sq_dist, uint max_iterations) {
 
     // Map the smooth iteration count to our color map range
     float color_pos = mod(smooth_iter * 0.2, float(color_map.length()));
-    
+
     int idx1 = int(floor(color_pos));
     int idx2 = (idx1 + 1) % color_map.length();
     float fract_part = fract(color_pos);
 
     return mix(color_map[idx1], color_map[idx2], fract_part);
+}
+
+vec3 cosine_palette(float t) {
+    vec3 a = vec3(0.5, 0.5, 0.5);
+    vec3 b = vec3(0.5, 0.5, 0.5);
+    vec3 c = vec3(1.0, 1.0, 1.0);
+    vec3 d = vec3(0.0, 0.33, 0.67);
+    return a + b * cos(6.28318 * (c * t + d));
 }

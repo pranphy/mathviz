@@ -9,26 +9,13 @@
 
 AtomScene::AtomScene(int w, int h)
     : Scene(w, h, atom_vert_spirv, atom_frag_spirv), num_electrons{2'000'000},
-    r_p(0.12f), r_n(0.12f), r_e(0.005f) {
-    width = w;
-    height = h;
-    scale = 1.0f;
-    x = 0.0f;
-    y = 0.0f;
+    r_p(0.12f), r_n(0.12f), r_e(0.005f)
+{
     max_iterations = 80;
-    pasued = false;
     is_animated = true;
     name = "atom_scene";
 
-    x_min_factor = -1.5f;
-    x_max_factor = 1.5f;
-    y_min_factor = -1.5f;
-    y_max_factor = 1.5f;
-
     particles.resize(10 + num_electrons);
-
-    //particles[0] = glm::vec4(0.0f, 0.0f, 0.0f, -1.0f); // Proton
-    //particles[1] = glm::vec4(0.0f, 0.0f, 0.0f, -2.0f); // Neutron
 
     const float phi = pi * (3.0f - std::sqrt(5.0f)); // Golden angle = 2pi / phi
     const float shell_radius = 0.85f;

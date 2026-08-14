@@ -4,6 +4,7 @@
 #include "scene/generic.h"
 #include "scene/geometry.h"
 #include "scene/atom.h"
+#include "scene/newton_fractal.h"
 #include "ogl/app.h"
 #include "ogl/tui.h"
 
@@ -17,7 +18,8 @@ int gui(){
     auto generic = std::make_shared<GenericScene>(width, height);
     auto geometry = std::make_shared<GeometryScene>(width, height);
     auto atom = std::make_shared<AtomScene>(width, height);
-    app.add_scene(mandelbrot);
+    auto newton = std::make_shared<NewtonScene>(width, height);
+    app.add_scene(newton);
     app.mainloop();
     return 0;
 }

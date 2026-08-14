@@ -18,10 +18,14 @@ void handle_mouse_button(GLFWwindow* window, int button, int action, int /*mods*
 }
 
 void handle_cursor_pos(GLFWwindow* window, double xpos, double ypos) {
+    auto s = static_cast<std::shared_ptr<Scene>*>(glfwGetWindowUserPointer(window));
+    (*s)->set_dragging(is_dragging);
     if (!is_dragging) return;
 
-    auto s = static_cast<std::shared_ptr<Scene>*>(glfwGetWindowUserPointer(window));
+
     if (!s || !*s) return;
+
+    (*s)->set_mouse_pos(xpos, ypos);
 
     double dx = xpos - last_mouse_x;
     double dy = ypos - last_mouse_y;
@@ -134,7 +138,6 @@ int App::init() {
     }
     return 0;
 }
-
 
 void App::add_scene(std::shared_ptr<Scene> s){
     scene = s;

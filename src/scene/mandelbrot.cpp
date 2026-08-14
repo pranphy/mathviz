@@ -1,39 +1,31 @@
+#include <vector>
+#include <print>
 #include <glm/glm.hpp>
 
 #include "scene/mandelbrot.h"
 #include "mandelbrot_vert.h"
 #include "mandelbrot_frag.h"
 #include "newton_frac_frag.h"
+#include "standing_wave_frag.h"
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
+      //Scene(w, h, mandelbrot_vert_spirv, standing_wave_frag_spirv)
       Scene(w, h, mandelbrot_vert_spirv, newton_frac_frag_spirv)
       //Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
 {
     width = w;
     height = h;
-    scale = 1.0f;
-    x = 0.0f;
-    y = 0.2f;
     max_iterations = 30;
     name = "mandelbrot_scene";
 
     x_min_factor = -2.f;
     x_max_factor =  1.f;
-    y_min_factor = -1.f;
-    y_max_factor =  1.f;
-}
-void MandelbrotScene::set_resolution(int w, int h){
-    width  = w;
-    height = h;
-    std::println("Mandelbert: The size changed to ({},{})",width,height);
-    buffer.resize(w*h*3);
 }
 
 void MandelbrotScene::set_param(MandelbrotParam p){
     std::tie(x,y,scale,max_iterations) = p;
 }
-
 
 void MandelbrotScene::animate_to(MandelbrotParam m1, int frames,VideoWriter& wr,GLFWwindow* window) {
     // Animation parameters

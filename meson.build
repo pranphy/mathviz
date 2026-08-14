@@ -30,7 +30,8 @@ shader_files = [
   'res/shaders/geometry.vert',
   'res/shaders/geometry.frag',
   'res/shaders/atom.vert',
-  'res/shaders/atom.frag'
+  'res/shaders/atom.frag',
+  'res/shaders/newton_general.frag'
 ]
 
 # Central list of all shared helper/include files.
@@ -72,6 +73,7 @@ executable('mathviz',
   'src/scene/generic.cpp',
   'src/scene/geometry.cpp',
   'src/scene/atom.cpp',
+  'src/scene/newton_fractal.cpp',
   shader_headers,
   include_directories : [include_directories('include', 'glad/include')],
   link_with : glad_lib,

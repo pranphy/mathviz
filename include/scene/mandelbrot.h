@@ -1,8 +1,6 @@
 #pragma once
 
-#include <vector>
 #include <tuple>
-#include <print>
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
@@ -21,7 +19,6 @@ struct MandelbrotScene: public Scene
     void animate_to(MandelbrotParam m1, int frames,VideoWriter& wr, GLFWwindow* window);
     virtual bool run(GLFWwindow* window, int) override;
     bool save_video(GLFWwindow* window, int);
-    virtual void set_resolution(int width, int height) override;
     virtual ~MandelbrotScene();
 };
 
