@@ -2,7 +2,7 @@
 
 **MathViz** is a high-performance, real-time mathematical visualization engine built in C++20 and OpenGL 4.6 (SPIR-V Shaders). It provides interactive 2D curve plotting, multi-layer composite graphing, 3D raymarched surface visualization, and fractal exploration with anti-aliased rendering, customizable neon bloom, and video recording capabilities.
 
-[newton-fractal-3rd-colorful-01.png](https://postimg.cc/qNM4w7Jr)
+![](https://i.postimg.cc/3x2NKyzk/newton-fractal-3rd-colorful-01.png)
 
 
 ## 🌟 Key Features
