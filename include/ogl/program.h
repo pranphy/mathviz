@@ -33,6 +33,26 @@ struct Program {
     glDetachShader(id, fragment_shader);
   }
 
+  // Non-copyable
+  Program(const Program&) = delete;
+  Program& operator=(const Program&) = delete;
+
+  // Move-constructible
+  Program(Program&& other) noexcept : id(other.id) {
+    other.id = 0;
+  }
+
+  // Move-assignable
+  Program& operator=(Program&& other) noexcept {
+    if (this != &other) {
+      if (id != 0)
+        glDeleteProgram(id);
+      id = other.id;
+      other.id = 0;
+    }
+    return *this;
+  }
+
   ~Program() noexcept {
     if (id != 0)
       glDeleteProgram(id);

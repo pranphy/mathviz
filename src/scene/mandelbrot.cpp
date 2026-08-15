@@ -3,16 +3,16 @@
 #include <glm/glm.hpp>
 
 #include "scene/mandelbrot.h"
-#include "mandelbrot_vert.h"
+#include "fullscreen_quad_vert.h"
 #include "mandelbrot_frag.h"
 #include "newton_frac_frag.h"
 #include "standing_wave_frag.h"
 
 
 MandelbrotScene::MandelbrotScene(int w, int h):
-      //Scene(w, h, mandelbrot_vert_spirv, standing_wave_frag_spirv)
-      Scene(w, h, mandelbrot_vert_spirv, newton_frac_frag_spirv)
-      //Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
+      //Scene(w, h, fullscreen_quad_vert_spirv, standing_wave_frag_spirv)
+      Scene(w, h, fullscreen_quad_vert_spirv, newton_frac_frag_spirv)
+      //Scene(w, h, fullscreen_quad_vert_spirv, mandelbrot_frag_spirv)
 {
     width = w;
     height = h;

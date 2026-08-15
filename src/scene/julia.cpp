@@ -1,11 +1,11 @@
 #include <print>
 
 #include "scene/julia.h"
-#include "julia_vert.h"
+#include "fullscreen_quad_vert.h"
 #include "julia_frag.h"
 
 JuliaScene::JuliaScene(int w, int h) :
-    Scene(w, h, julia_vert_spirv, julia_frag_spirv),
+    Scene(w, h, fullscreen_quad_vert_spirv, julia_frag_spirv),
     c_real(-0.7f),
     c_imag(0.27015f),
     last_space_pressed(false)

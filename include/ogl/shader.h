@@ -32,6 +32,23 @@ struct Shader {
         }
     }
 
+    Shader(const Shader&) = delete;
+    Shader& operator=(const Shader&) = delete;
+
+    Shader(Shader&& other) noexcept : id(other.id) {
+        other.id = 0;
+    }
+
+    Shader& operator=(Shader&& other) noexcept {
+        if (this != &other) {
+            if (id != 0)
+                glDeleteShader(id);
+            id = other.id;
+            other.id = 0;
+        }
+        return *this;
+    }
+
     ~Shader() noexcept {
         if (id != 0)
             glDeleteShader(id);
@@ -39,4 +56,3 @@ struct Shader {
 
     operator GLuint() const { return id; }
 };
-

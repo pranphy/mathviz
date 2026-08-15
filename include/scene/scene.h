@@ -25,6 +25,7 @@ public:
     bool is_dragging;
     bool paused = false;
     bool is_animated = false;
+    float u_time = 0.0f; // Global simulation / animation time provided by App
 
     std::string name;
 
@@ -32,12 +33,9 @@ public:
     Buffer rectangle_buffer;
     VertexArray rectangle_vao;
 
-    // Common OpenGL rendering data
-
     // View bounds configuration (factors multiplied by scale)
     float x_min_factor = -2.0f;
     float x_max_factor = 1.0f;
-
 
     Scene(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv);
     virtual ~Scene() = 0;
@@ -45,6 +43,8 @@ public:
     void render();
     void set_dragging(bool state);
     void set_mouse_pos(double x, double y);
+    void set_time(float t);
+    virtual void upload_common_uniforms();
     void save_scene();
     virtual void set_resolution(int width, int height);
 
@@ -61,10 +61,8 @@ public:
     virtual void mouse_drag(float dx, float dy);
     virtual bool run(GLFWwindow *, int) = 0;
 
-
     // Subclass hooks for custom states and custom uniforms
     virtual void pre_draw();
     virtual void post_draw();
     virtual void setup_uniforms() {}
-
 };

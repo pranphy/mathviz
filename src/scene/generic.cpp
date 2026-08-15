@@ -2,25 +2,15 @@
 #include <glm/glm.hpp>
 
 #include "scene/generic.h"
-#include "julia_vert.h"
+#include "fullscreen_quad_vert.h"
 #include "generic_frag.h"
 #include "standing_wave_frag.h"
 
 
 GenericScene::GenericScene(int w, int h):
-      Scene(w, h, julia_vert_spirv, standing_wave_frag_spirv)
+      Scene(w, h, fullscreen_quad_vert_spirv, standing_wave_frag_spirv)
 {
-    width = w;
-    height = h;
-    scale = 1.0f;
-    x = 0.0f;
-    y = 0.2f;
-    max_iterations = 30;
-    is_animated = true;
     name = "generic_scene";
-
-    x_min_factor = -2.f;
-    x_max_factor =  1.f;
 }
 void GenericScene::set_resolution(int w, int h){
     width  = w;
@@ -36,7 +26,6 @@ void GenericScene::setup_uniforms() {
 void GenericScene::set_param(GenericParam p){
     std::tie(x,y,scale,max_iterations) = p;
 }
-
 
 bool GenericScene::save_video(GLFWwindow* window,int /* unused */){
     // Initialize VideoWriter with the target render resolution

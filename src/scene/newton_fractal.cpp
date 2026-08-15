@@ -3,14 +3,14 @@
 #include <glm/glm.hpp>
 
 #include "scene/newton_fractal.h"
-#include "mandelbrot_vert.h"
+#include "fullscreen_quad_vert.h"
 #include "newton_general_frag.h"
 
 
 NewtonScene::NewtonScene(int w, int h):
-    //Scene(w, h, mandelbrot_vert_spirv, standing_wave_frag_spirv)
-    Scene(w, h, mandelbrot_vert_spirv, newton_general_frag_spirv),
-    //Scene(w, h, mandelbrot_vert_spirv, mandelbrot_frag_spirv)
+    //Scene(w, h, fullscreen_quad_vert_spirv, standing_wave_frag_spirv)
+    Scene(w, h, fullscreen_quad_vert_spirv, newton_general_frag_spirv),
+    //Scene(w, h, fullscreen_quad_vert_spirv, mandelbrot_frag_spirv)
     coeffs{{-1.0f,0.0f}, {0.0f,0.0f},{0.0f,0.0f},{1.0f,0.0f}},
     roots{{1.0f,0.0f},{-0.5f,std::sqrt(3.0f)/2.0f},{-0.5f,-std::sqrt(3.0f)/2.0f}},
     click_tol{0.3}

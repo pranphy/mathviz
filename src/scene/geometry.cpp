@@ -1,9 +1,9 @@
 #include "scene/geometry.h"
-#include "geometry_vert.h"
+#include "fullscreen_quad_vert.h"
 #include "geometry_frag.h"
 
 GeometryScene::GeometryScene(int w, int h) :
-    Scene(w, h, geometry_vert_spirv, geometry_frag_spirv)
+    Scene(w, h, fullscreen_quad_vert_spirv, geometry_frag_spirv)
 {
     max_iterations = 80; // Reused as raymarching max steps
     is_animated = true;

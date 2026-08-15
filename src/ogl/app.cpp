@@ -150,9 +150,12 @@ void App::mainloop(){
         bool running = true;
         int runmode = static_cast<int>(mode);
         while (running && !glfwWindowShouldClose(window)) {
+            if (scene) {
+                scene->set_time(static_cast<float>(glfwGetTime()));
+            }
             running = scene->run(window,runmode);
             glfwSwapBuffers(window);
-            if (scene->is_animated) {
+            if (scene && scene->is_animated) {
                 glfwPollEvents();
             } else {
                 glfwWaitEvents();

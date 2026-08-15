@@ -7,24 +7,37 @@
 Scene::Scene(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv):
     scale{1.0f},x{0.0f},y{0.0f},width{w}, height{h}, window_aspect{static_cast<float>(w)/h}, buffer(h * w * 3),
     max_iterations{30}, param{3},
-    cursor_x{0.0},cursor_y{0.0}, is_dragging(false), paused{false}, is_animated{false},
+    cursor_x{0.0},cursor_y{0.0}, is_dragging(false), paused{false}, is_animated{false}, u_time{0.0f},
     name{"generic_scene"},
     shader_program{vs_spirv, fs_spirv}
 {
     create_rectangle_vao(rectangle_buffer, rectangle_vao);
 }
 
-
 void Scene::set_resolution(int width, int height){
     this->width = width;
     this->height = height;
     buffer.resize(width*height*3);
     window_aspect = static_cast<float>(width)/height;
-    //std::println("Scene={} size changed to ({},{})",name,width,height);
+}
+
+void Scene::set_time(float t) {
+    u_time = t;
+}
+
+void Scene::upload_common_uniforms() {
+    float aspect = (height > 0) ? (static_cast<float>(width) / height) : 1.0f;
+
+    glUniform1f(0, static_cast<float>(width));
+    glUniform1f(1, static_cast<float>(height));
+    glUniform2f(2, x_min_factor * scale + x, x_max_factor * scale + x);
+    glUniform2f(3, (x_min_factor / aspect) * scale + y, (x_max_factor / aspect) * scale + y);
+    glUniform1ui(4, static_cast<uint32_t>(max_iterations));
+    glUniform1f(6, u_time);
+    glUniform1ui(8, static_cast<uint32_t>(param));
 }
 
 void Scene::save_scene(){
-    //std::println("The current size is {},{}",width,height);
     glReadPixels(0, 0, width, height, GL_RGB, GL_UNSIGNED_BYTE, buffer.data());
     write_ppm(std::format("{}_current_scene.ppm",name), width, height, buffer);
 }
@@ -100,20 +113,11 @@ void Scene::pre_draw(){
 void Scene::post_draw() {}
 
 void Scene::render() {
-    glViewport(0, 0, width, height);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(shader_program);
 
-    glUniform1f(0, static_cast<float>(width));
-    glUniform1f(1, static_cast<float>(height));
-
-    glUniform2f(2, x_min_factor * scale + x, x_max_factor * scale + x);
-    glUniform2f(3, x_min_factor / window_aspect * scale + y, x_max_factor/window_aspect* scale + y);
-
-    glUniform1ui(4, max_iterations);
-    glUniform1f(6, static_cast<float>(glfwGetTime()));
-    glUniform1ui(8,param);
+    upload_common_uniforms();
 
     // Call subclass hook for additional uniforms (if any)
     setup_uniforms();
@@ -121,10 +125,8 @@ void Scene::render() {
     // Call custom subclass states hook
     pre_draw();
 
-
     // Call custom subclass cleanup hook
     post_draw();
 
     glUseProgram(0);
 }
-

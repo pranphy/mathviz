@@ -20,24 +20,37 @@ glslang = find_program('glslangValidator', required: true)
 
 # Simply list the shader source files:
 shader_files = [
-  'res/shaders/mandelbrot.vert',
+  'res/shaders/fullscreen_quad.vert',
   'res/shaders/mandelbrot.frag',
   'res/shaders/newton_frac.frag',
-  'res/shaders/julia.vert',
   'res/shaders/julia.frag',
   'res/shaders/generic.frag',
   'res/shaders/standing_wave.frag',
-  'res/shaders/geometry.vert',
   'res/shaders/geometry.frag',
   'res/shaders/atom.vert',
   'res/shaders/atom.frag',
-  'res/shaders/newton_general.frag'
+  'res/shaders/newton_general.frag',
+  'res/shaders/plot2d.frag',
+  'res/shaders/plot3d.frag',
+  'res/shaders/grid2d.frag',
+  'res/shaders/plots/polynomial.frag',
+  'res/shaders/plots/waves.frag',
+  'res/shaders/plots/fourier.frag',
+  'res/shaders/plots/soliton.frag',
+  'res/shaders/plots/implicit.frag',
+  'res/shaders/plots/polar.frag',
+  'res/shaders/plots/surface_ripple.frag',
+  'res/shaders/plots/surface_membrane.frag',
+  'res/shaders/line_plot.vert',
+  'res/shaders/line_plot.frag'
 ]
 
 # Central list of all shared helper/include files.
 # Append any new custom #include files here:
 common_glsl_includes = files(
   'res/shaders/colormap.glsl',
+  'res/shaders/common_uniforms.glsl',
+  'res/shaders/math_functions.glsl'
 )
 
 shader_headers = []
@@ -74,6 +87,10 @@ executable('mathviz',
   'src/scene/geometry.cpp',
   'src/scene/atom.cpp',
   'src/scene/newton_fractal.cpp',
+  'src/scene/plot.cpp',
+  'src/scene/plot2d.cpp',
+  'src/scene/plot3d.cpp',
+  'src/scene/line_plot2d.cpp',
   shader_headers,
   include_directories : [include_directories('include', 'glad/include')],
   link_with : glad_lib,

@@ -22,6 +22,22 @@ struct Buffer {
         if (!id) throw std::runtime_error{"Failed to create buffer"};
     }
 
+    Buffer(const Buffer&) = delete;
+    Buffer& operator=(const Buffer&) = delete;
+
+    Buffer(Buffer&& other) noexcept : id(other.id) {
+        other.id = 0;
+    }
+
+    Buffer& operator=(Buffer&& other) noexcept {
+        if (this != &other) {
+            if (id) glDeleteBuffers(1, &id);
+            id = other.id;
+            other.id = 0;
+        }
+        return *this;
+    }
+
     ~Buffer() noexcept {
         if (id) glDeleteBuffers(1, &id);
     }
@@ -37,13 +53,28 @@ struct VertexArray {
         if (!id) throw std::runtime_error{"Failed to create VAO"};
     }
 
+    VertexArray(const VertexArray&) = delete;
+    VertexArray& operator=(const VertexArray&) = delete;
+
+    VertexArray(VertexArray&& other) noexcept : id(other.id) {
+        other.id = 0;
+    }
+
+    VertexArray& operator=(VertexArray&& other) noexcept {
+        if (this != &other) {
+            if (id) glDeleteVertexArrays(1, &id);
+            id = other.id;
+            other.id = 0;
+        }
+        return *this;
+    }
+
     ~VertexArray() noexcept {
         if (id) glDeleteVertexArrays(1, &id);
     }
 
     operator GLuint() const { return id; }
 };
-
 
 void create_rectangle_vao(Buffer& vbo, VertexArray& vao);
 void create_points_vao(Buffer& vbo, VertexArray& vao, const std::vector<glm::vec4>& data);
