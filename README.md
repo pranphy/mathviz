@@ -5,6 +5,8 @@
 | Newton's Method Fractal | Mandelbrot Set Explorer |
 | :---: | :---: |
 | ![Newton Fractal Scene](https://i.postimg.cc/3x2NKyzk/newton-fractal-3rd-colorful-01.png) | ![Mandelbrot Scene](https://i.postimg.cc/L6bQH5jh/mandelbrot-scene.png) |
+| 2D plotting example | Atomic Orbital |
+| ![2D Plot](https://i.postimg.cc/rsP6XJ8W/plot2d-glow-01.png) | ![Atomic Orbital](https://i.postimg.cc/W4BhjG1Q/atom-scene-3-1-0.png) |
 
 
 ## 🌟 Key Features
