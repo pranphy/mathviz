@@ -1,7 +1,6 @@
-#include <print>
 #include <format>
-#include <algorithm>
 
+#include "writer/video.h"
 #include "scene/plot.h"
 
 Plot::Plot(int w, int h, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv)

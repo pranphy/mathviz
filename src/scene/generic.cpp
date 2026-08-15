@@ -1,9 +1,9 @@
 #include <print>
 #include <glm/glm.hpp>
 
+#include "writer/video.h"
 #include "scene/generic.h"
 #include "fullscreen_quad_vert.h"
-#include "generic_frag.h"
 #include "standing_wave_frag.h"
 
 

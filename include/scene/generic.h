@@ -5,9 +5,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
-#include "utils/all.h"
 #include "scene/scene.h"
-#include "writer/video.h"
 
 typedef std::tuple<float, float, float, int> GenericParam;
 

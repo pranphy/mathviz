@@ -7,8 +7,6 @@
 #include "polynomial_frag.h"
 #include "waves_frag.h"
 #include "fourier_frag.h"
-#include "soliton_frag.h"
-#include "implicit_frag.h"
 
 PlotLayer::PlotLayer(std::string layer_name, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv, glm::vec3 layer_color)
     : name(layer_name),

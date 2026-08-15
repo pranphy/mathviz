@@ -1,4 +1,3 @@
-#include <print>
 #include <format>
 
 #include "scene/scene.h"

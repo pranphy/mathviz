@@ -3,10 +3,9 @@
 #include <span>
 #include <string>
 #include <vector>
-#include <memory>
+
 #include "scene/plot.h"
 
-// Represents an individual mathematical graph layer on a 2D coordinate plane
 struct PlotLayer
 {
     std::string name;
@@ -18,7 +17,6 @@ struct PlotLayer
     PlotLayer(std::string layer_name, std::span<const uint32_t> vs_spirv, std::span<const uint32_t> fs_spirv, glm::vec3 layer_color);
 };
 
-// 2D Multi-Layer Composite Plotter derived from Plot
 class Plot2D : public Plot
 {
 public:

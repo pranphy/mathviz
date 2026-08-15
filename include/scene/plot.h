@@ -4,10 +4,8 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <span>
-#include <string>
 
 #include "scene/scene.h"
-#include "writer/video.h"
 
 // Base class for mathematical plotting scenes
 class Plot : public Scene

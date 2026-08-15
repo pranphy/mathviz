@@ -3,12 +3,11 @@
 #include <vector>
 #include <string>
 #include <functional>
-#include <memory>
+
 #include <glad/gl.h>
 #include <glm/glm.hpp>
 
 #include "scene/plot.h"
-#include "grid2d_frag.h"
 #include "utils/all.h"
 
 // RAII wrapper for Line VBO & VAO GPU buffers
