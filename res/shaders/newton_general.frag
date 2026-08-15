@@ -141,7 +141,8 @@ void main() {
             // Generate a distinct color dynamically based on the root index
             //float hue = float(root_index+1) / float(pol_deg+1.0);
             //pixel_color = vec4(hue, 1.0 - hue, 0.5 + 0.5 * hue, 1.0);
-            pixel_color = vec4(cosine_palette(i/float(pol_deg)),1.0f);
+            //pixel_color = vec4(cosine_palette(i/float(pol_deg)),1.0f);
+            pixel_color = vec4(cosine_palette(i/float(pol_deg)+ steps_t/float(n_steps)),1.0f);
         }
     }
 

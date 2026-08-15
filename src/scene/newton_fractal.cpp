@@ -35,18 +35,7 @@ void NewtonScene::mouse_drag(float dx,float dy){
     auto mouse_coord = get_mouse_coord();
     auto root_pos = get_root_pos(mouse_coord);
     if(root_pos < roots.size()){
-        //auto froot = roots[root_pos];
-        //std::println("The root {}. is moved from {:.3f} + {:.3f}i  --to-->  {:.3f} + {:.3f}i ",root_pos,froot.real(),froot.imag(),mouse_coord.real(), mouse_coord.imag());
         update_roots(root_pos, mouse_coord.real(), mouse_coord.imag());
-        //std::println("All roots ");
-        //for(auto& root : roots){
-        //    std::print(" {:.4f} + {:.4f}i, ",root.real(),root.imag());
-        //}
-        //std::println(" \nThe coeffs are ");
-        //for(auto& coeff: coeffs){
-        //    std::print(" {:.4f} + {:.4f}i, ",coeff.real(),coeff.imag());
-        //}
-        //std::println(" ");
     } else {
         float cx = static_cast<float>((dx / width)  * scale * 2.0);
         float cy = static_cast<float>((dy / height) * scale * 2.0);
