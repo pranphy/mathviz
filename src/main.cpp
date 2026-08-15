@@ -1,10 +1,3 @@
-
-#include "scene/mandelbrot.h"
-#include "scene/julia.h"
-#include "scene/generic.h"
-#include "scene/geometry.h"
-#include "scene/atom.h"
-#include "scene/newton_fractal.h"
 #include "scene/plot2d.h"
 #include "scene/plot3d.h"
 #include "scene/line_plot2d.h"
