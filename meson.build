@@ -9,6 +9,8 @@ avformat_dep = dependency('libavformat')
 avcodec_dep = dependency('libavcodec')
 swscale_dep = dependency('libswscale')
 avutil_dep = dependency('libavutil')
+freetype_dep = dependency('freetype2')
+harfbuzz_dep = dependency('harfbuzz')
 
 glad_lib = static_library('glad',
   'glad/src/gl.c',
@@ -91,9 +93,11 @@ executable('mathviz',
   'src/scene/plot2d.cpp',
   'src/scene/plot3d.cpp',
   'src/scene/line_plot2d.cpp',
+  'src/text/font_atlas.cpp',
+  'src/text/text_renderer.cpp',
   shader_headers,
   include_directories : [include_directories('include', 'glad/include')],
   link_with : glad_lib,
-  dependencies : [glfw_dep, gl_dep, avformat_dep, avcodec_dep, swscale_dep, avutil_dep],
+  dependencies : [glfw_dep, gl_dep, avformat_dep, avcodec_dep, swscale_dep, avutil_dep, freetype_dep, harfbuzz_dep],
   cpp_args : ['-pedantic']
 )
